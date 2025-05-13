@@ -1,8 +1,7 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
 import "./App.css";
-import imgSun from "./assets/cloudy.png";
+import ParaGraf from "./components/ListItem";
+
+import ListItem from "./components/ListItem";
 
 function App() {
   const cityName = "Odesa";
@@ -242,96 +241,29 @@ function App() {
     },
   ];
 
-  const todos = [
-    {
-      userId: 1,
-      id: 1,
-      title: "delectus aut autem",
-      completed: false,
-    },
-    {
-      userId: 1,
-      id: 2,
-      title: "quis ut nam facilis et officia qui",
-      completed: false,
-    },
-    {
-      userId: 1,
-      id: 3,
-      title: "fugiat veniam minus",
-      completed: false,
-    },
-    {
-      userId: 1,
-      id: 4,
-      title: "et porro tempora",
-      completed: true,
-    },
-    {
-      userId: 1,
-      id: 5,
-      title: "laboriosam mollitia et enim quasi adipisci quia provident illum",
-      completed: false,
-    },
-    {
-      userId: 1,
-      id: 6,
-      title: "qui ullam ratione quibusdam voluptatem quia omnis",
-      completed: false,
-    },
-    {
-      userId: 1,
-      id: 7,
-      title: "illo expedita consequatur quia in",
-      completed: false,
-    },
-    {
-      userId: 1,
-      id: 8,
-      title: "quo adipisci enim quam ut ab",
-      completed: true,
-    },
-    {
-      userId: 1,
-      id: 9,
-      title: "molestiae perspiciatis ipsa",
-      completed: false,
-    },
-    {
-      userId: 1,
-      id: 10,
-      title: "illo est ratione doloremque quia maiores aut",
-      completed: true,
-    },
-  ];
+  function evenOddNumbers(isEven: boolean) {
+    return users
+      .filter((user) => {
+        // if (isEven) {
+        //   return user.id % 2 === 0;
+        // } else {
+        //   return user.id % 2 === 1;
+        // }
+        return isEven ? user.id % 2 === 0 : user.id % 2 === 1;
+      })
+      .map((user) => (
+        <li>
+          {user.id} {user.username}
+        </li>
+      ));
+  }
 
   return (
-    // <div className="main__card__info">
-    //   <div className="title__info">
-    //     <h1 className="card__city">{cityName}</h1>
-    //     <p className="card__country">{country}</p>
-    //   </div>
-    //   <div className="degree__info">
-    //     <h1>18.8</h1>
-    //     <p>{degree}</p>
-    //   </div>
-    //   <img src={imgSun} alt="" />
-    //   <h2 className="card__weather__info">{weather}</h2>
-    // </div>
-
-    <ul>
-      {/* {users.map((element) => {
-        return <div>{element.username}</div>;
-      })} */}
-
-      {todos.map((element) => {
-        return (
-          <li>
-            <span className="green">{element.id}</span>, <span className="red">{element.title}</span>
-          </li>
-        );
-      })}
-    </ul>
+    <div className="table">
+      <ul>{evenOddNumbers(false)}</ul>
+      <ul>{evenOddNumbers(true)}</ul>
+      <ParaGraf />
+    </div>
   );
 }
 
