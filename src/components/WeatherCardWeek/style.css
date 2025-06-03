@@ -1,0 +1,35 @@
+.weather__card__week {
+  display: flex;
+  flex-direction: column;
+  align-items: baseline;
+  justify-content: space-between;
+  width: 250px;
+  height: 250px;
+  background-color: white;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 8px 12px 10px rgba(167, 156, 156, 0.3);
+}
+
+.weather__card__week h3 {
+  color: black;
+  font-size: 18px;
+  font-weight: bold;
+  padding-bottom: 10px;
+}
+
+.weather__card__week p {
+  color: darkslategray;
+}
+
+.weather__card__week span {
+  color: black;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.week_img {
+  width: 60px;
+  height: 60px;
+  padding-top: 5px;
+}

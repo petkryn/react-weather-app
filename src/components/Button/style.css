@@ -1,0 +1,50 @@
+.btn {
+  color: white;
+  padding: 10px 15px;
+  background-color: red;
+  border-radius: 5px;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+@media (max-width: 1150px) {
+  .btn {
+    padding: 8px 13px;
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 950px) {
+  .btn {
+    padding: 6px 11px;
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 800px) {
+  .btn {
+    padding: 6px 11px;
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 768px) {
+  .btn {
+    padding: 5px 10px;
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 700px) {
+  .btn {
+    padding: 5px 10px;
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 620px) {
+  .btn {
+    padding: 5px 10px;
+    font-size: 10px;
+  }
+}
