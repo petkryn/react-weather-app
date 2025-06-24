@@ -126,10 +126,7 @@ body {
   font-size: 45px;
 }
 
-img {
-  max-width: 50px;
-  max-height: 50px;
-}
+
 
 .main__card__info img {
   display: flex;
