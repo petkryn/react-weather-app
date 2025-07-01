@@ -5,11 +5,11 @@ const Counter: React.FC = () => {
   const [count, setCount] = useState(0);
 
   const handleDecrease = () => {
-    setCount((prevState) => {
-      console.log(prevState);
-      return prevState - 1;
-    });
-    // setCount((prevState) => prevState - 1);
+    // setCount((prevState) => {
+    //   console.log(prevState);
+    //   return prevState - 1;
+    // });
+    setCount((prevState) => prevState - 1);
   };
 
   const handleIncrease = () => {

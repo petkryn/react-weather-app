@@ -5,6 +5,8 @@ import TaskList from "../../components/TaskList";
 import { tasks } from "../../data/tasks";
 import UserList from "../../components/UserList";
 import { users } from "../../data/users";
+import FruitsArray from "../../components/FruitsArray";
+import CitiesArray from "../../components/CitiesArray";
 
 const TestField: FC = () => {
   return (
@@ -16,7 +18,9 @@ const TestField: FC = () => {
       <NamesArray />
       <TaskList tasks={tasks} />
 
-      <UserList users={users} />
+      {/* <UserList users={users} /> */}
+      <FruitsArray/>
+      <CitiesArray/>
     </div>
   );
 };
