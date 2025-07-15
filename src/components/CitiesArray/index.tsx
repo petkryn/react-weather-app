@@ -1,21 +1,20 @@
 import "./style.css";
 import { FC, useState } from "react";
+import Button from "../Button";
 
 const CitiesArray = () => {
-  const [fruit, setFruits] = useState<string[]>([]);
+  const [cities, setCities] = useState<string[]>([]);
 
   const addCity = () => {
-    setFruits((prevState) => {
+    setCities((prevState) => {
       return [...prevState, "Lviv"];
     });
   };
 
   return (
     <div>
-      <button className="btn" onClick={addCity}>
-        Місто
-      </button>
-      {fruit.join("-")};
+      <Button customClick={addCity}>Місто</Button>
+      {cities.join("-")}
     </div>
   );
 };

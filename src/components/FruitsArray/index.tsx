@@ -1,7 +1,7 @@
 import { FC, useState } from "react";
 
 const FruitsArray = () => {
-  const [fruit, setFruits] = useState<string[]>([]);
+  const [fruits, setFruits] = useState<string[]>([]);
 
   const addFruit = () => {
     setFruits((prevState) => {
@@ -12,7 +12,7 @@ const FruitsArray = () => {
   return (
     <div>
       <button onClick={addFruit}>Фрукти</button>
-      {fruit.join("-")};
+      {fruits.join("-")};
     </div>
   );
 };

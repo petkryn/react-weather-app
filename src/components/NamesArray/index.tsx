@@ -1,49 +1,26 @@
 import "./style.css";
 import { FC, useState } from "react";
-// import { names } from "../../data/names";
+import Button from "../Button";
+import { names } from "../../data/names";
 
 const NamesArray = () => {
-  const [currentNames, setCurrentNames] = useState([]);
+  const [currentNames, setCurrentNames] = useState<string[]>([]);
+  const [count, setCount] = useState<number>(0);
 
   const handlePush = () => {
-    //@ts-ignore
-    setCurrentNames((prevState) => {
-      console.log(prevState);
-      return [...prevState, "Andrii"];
-    });
+    const newCount = count + 1;
+    setCount(newCount);
+
+    if (newCount % 2 == 1) {
+      console.log(newCount);
+      setCurrentNames((prevState) => [...prevState, names[newCount]]);
+    }
   };
-  // const array: any = [];
-  // const newarray = () => {
-  //   array.push("Andrii");
-  //   console.log(array);
-  // };
-
-  // const handleNamePush = () => {
-  //   //@ts-ignore
-  //   setCurrentNames(["Andrii"]);
-  // };
-
-  // const handlePushName = () => {
-  //   //@ts-ignore
-  //   setCurrentNames(["Den"]);
-  // };
 
   return (
     <div>
-      <button onClick={handlePush} className="button">
-        Додати всі імена
-      </button>
-
-      {/* <button onClick={newarray} className="button">
-        імена
-      </button>
-      {array.join("")} */}
-      {/* <button onClick={handleNamePush} className="button">
-        Додати ім'я Андрій
-      </button>
-      <button onClick={handlePushName} className="button">
-        Додати ім'я Денис
-      </button> */}
+      <Button customClick={handlePush}>Додати одне ім'я</Button>
+      {count}
       {currentNames.join("-")}
     </div>
   );
