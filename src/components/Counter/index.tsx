@@ -1,15 +1,16 @@
 import "./style.css";
 import React, { useState } from "react";
+import Button from "../Button";
 
 const Counter: React.FC = () => {
-  const [count, setCount] = useState(0);
+  const [count, setCount] = useState<number>(0);
 
   const handleDecrease = () => {
-    setCount((prevState) => {
-      console.log(prevState);
-      return prevState - 1;
-    });
-    // setCount((prevState) => prevState - 1);
+    // setCount((prevState) => {
+    //   console.log(prevState);
+    //   return prevState - 1;
+    // });
+    setCount((prevState) => prevState - 1);
   };
 
   const handleIncrease = () => {
@@ -21,12 +22,8 @@ const Counter: React.FC = () => {
     <div className="counter__info">
       <h2>Лічильник: {count}</h2>
       <div className="buttons">
-        <button onClick={handleDecrease} className="button">
-          - Зменшити
-        </button>
-        <button onClick={handleIncrease} className="button">
-          + Збільшити
-        </button>
+        <Button onClick={handleDecrease}>- Зменшити</Button>
+        <Button onClick={handleIncrease}>+ Збільшити</Button>
       </div>
     </div>
   );

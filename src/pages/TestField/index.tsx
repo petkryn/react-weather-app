@@ -5,6 +5,9 @@ import TaskList from "../../components/TaskList";
 import { tasks } from "../../data/tasks";
 import UserList from "../../components/UserList";
 import { users } from "../../data/users";
+import FruitsArray from "../../components/FruitsArray";
+import CitiesArray from "../../components/CitiesArray";
+import RemoveNames from "../../components/RemoveNames";
 
 const TestField: FC = () => {
   return (
@@ -12,11 +15,12 @@ const TestField: FC = () => {
       <div>
         <Counter />
       </div>
-
       <NamesArray />
-      <TaskList tasks={tasks} />
-
-      <UserList users={users} />
+      <RemoveNames />
+      {/* <TaskList tasks={tasks} /> */}
+      {/* <UserList users={users} /> */}
+      <FruitsArray />
+      // <CitiesArray />
     </div>
   );
 };
