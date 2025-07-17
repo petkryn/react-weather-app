@@ -6,10 +6,6 @@ const Counter: React.FC = () => {
   const [count, setCount] = useState<number>(0);
 
   const handleDecrease = () => {
-    // setCount((prevState) => {
-    //   console.log(prevState);
-    //   return prevState - 1;
-    // });
     setCount((prevState) => prevState - 1);
   };
 
@@ -22,8 +18,8 @@ const Counter: React.FC = () => {
     <div className="counter__info">
       <h2>Лічильник: {count}</h2>
       <div className="buttons">
-        <Button onClick={handleDecrease}>- Зменшити</Button>
-        <Button onClick={handleIncrease}>+ Збільшити</Button>
+        <Button customClick={handleDecrease}>- Зменшити</Button>
+        <Button customClick={handleIncrease}>+ Збільшити</Button>
       </div>
     </div>
   );
