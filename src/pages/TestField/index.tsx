@@ -8,6 +8,9 @@ import { users } from "../../data/users";
 import FruitsArray from "../../components/FruitsArray";
 import CitiesArray from "../../components/CitiesArray";
 import RemoveNames from "../../components/RemoveNames";
+import Menu from "../../components/MenuComponent";
+import MenuComponent from "../../components/MenuComponent";
+import { menuList } from "../../data/menuList";
 
 const TestField: FC = () => {
   return (
@@ -20,6 +23,7 @@ const TestField: FC = () => {
       {/* <TaskList tasks={tasks} /> */}
       {/* <UserList users={users} /> */}
       <FruitsArray />
+      <MenuComponent menuListData={menuList} />
       // <CitiesArray />
     </div>
   );

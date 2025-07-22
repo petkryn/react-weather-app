@@ -10,11 +10,16 @@ import React from "react";
 interface ButtonProps {
   customClick: () => void;
   children: React.ReactNode;
+  isDisabled?: boolean;
 }
 
-const Button: React.FC<ButtonProps> = ({ customClick, children }) => {
+const Button: React.FC<ButtonProps> = ({
+  customClick,
+  children,
+  isDisabled,
+}) => {
   return (
-    <button className="btn" onClick={customClick}>
+    <button disabled={isDisabled} className="btn" onClick={customClick}>
       {children}
     </button>
   );
