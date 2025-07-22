@@ -8,12 +8,13 @@ const NamesArray = () => {
   const [count, setCount] = useState<number>(0);
 
   const handlePush = () => {
-    const newCount = count + 1;
-    setCount(newCount);
+    if (count < names.length) {
+      console.log(count);
+      setCurrentNames((prevState) => [...prevState, names[count]]);
+    }
 
-    if (newCount % 2 == 1) {
-      console.log(newCount);
-      setCurrentNames((prevState) => [...prevState, names[newCount]]);
+    if (count < names.length) {
+      setCount((prevState) => prevState + 1);
     }
   };
 
