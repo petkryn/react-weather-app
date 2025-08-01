@@ -19,7 +19,7 @@ const NamesArray = () => {
   };
 
   return (
-    <div>
+    <div className="names-array">
       <Button customClick={handlePush}>Додати одне ім'я</Button>
       {count}
       {currentNames.join("-")}

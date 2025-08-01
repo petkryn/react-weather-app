@@ -1,3 +1,4 @@
+import "./style.css";
 import { FC, useState } from "react";
 import Button from "../Button";
 import { names } from "../../data/names";
@@ -16,7 +17,7 @@ const NamesArray = () => {
   };
 
   return (
-    <div>
+    <div className="remove-names">
       <Button customClick={handleNameRemove}>Видалити одне ім'я</Button>
       {count}
       {currentNames.join("-")}

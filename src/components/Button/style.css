@@ -7,6 +7,11 @@
   font-weight: bold;
 }
 
+.btn:disabled {
+  background-color: gray;
+  cursor: not-allowed;
+}
+
 @media (max-width: 1150px) {
   .btn {
     padding: 8px 13px;
