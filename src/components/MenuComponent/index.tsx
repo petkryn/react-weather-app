@@ -3,26 +3,6 @@ import { FC, useState } from "react";
 import Button from "../Button";
 import { menuList } from "../../data/menuList";
 
-// interface MenuInterface {
-//   name: string;
-//   price: number;
-// }
-
-// interface MenuProps {
-//   menuListData: MenuInterface[];
-// }
-
-// const MenuComponent: FC<MenuProps> = ({ menuListData }) => {
-//   return (
-//     <div>
-//       {menuListData.map((item) => (
-//         <div>{item.name}: {item.price}</div>
-//       ))}
-
-//     </div>
-//   );
-// };
-
 interface MenuInterface {
   name: string;
   price: number;
@@ -33,10 +13,10 @@ const MenuComponent = () => {
     ...menuList,
   ]);
 
-  let isDisabled = false;
+  const [isReducePriceDisabled, setIsReducePriceDisabled] = useState(false);
 
   const handleDiscount = () => {
-    isDisabled = true;
+    setIsReducePriceDisabled(true);
     setMenuListData((prevState) => {
       return prevState.map((item) => {
         const newPrice = item.price * 0.9;
@@ -45,8 +25,13 @@ const MenuComponent = () => {
     });
   };
 
+  const handleOldPrice = () => {
+    setIsReducePriceDisabled(false);
+    setMenuListData([...menuList]);
+  };
+
   return (
-    <>
+    <div className="menu">
       <div>
         {menuListData.map((item, index) => (
           <div key={index}>
@@ -55,10 +40,14 @@ const MenuComponent = () => {
         ))}
       </div>
 
-      <Button isDisabled={isDisabled} customClick={handleDiscount}>
+      <Button isDisabled={isReducePriceDisabled} customClick={handleDiscount}>
         Знизити ціни на 10%
       </Button>
-    </>
+
+      <Button isDisabled={!isReducePriceDisabled} customClick={handleOldPrice}>
+        Показати стару ціну
+      </Button>
+    </div>
   );
 };
 

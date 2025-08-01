@@ -1,9 +1,3 @@
-// import "./style.css";
-
-// function Button({ buttonText }: { buttonText: string }) {
-//   return <button className="btn">{buttonText}</button>;
-// }
-
 import "./style.css";
 import React from "react";
 
