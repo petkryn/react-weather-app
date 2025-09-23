@@ -1,0 +1,29 @@
+.square-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  border: 2px solid red;
+  padding: 10px;
+}
+
+.square {
+  width: 50px;
+  height: 50px;
+  background-color: teal;
+  border: 2px solid black;
+}
+
+
+.red__square {
+  width: 50px;
+  height: 50px;
+  background-color: red;
+  border: 2px solid black;
+}
+
+.yellow__square {
+  width: 50px;
+  height: 50px;
+  background-color: yellow;
+  border: 2px solid black;
+}

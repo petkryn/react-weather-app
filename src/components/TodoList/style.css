@@ -1,0 +1,6 @@
+.todo__style {
+  min-height: 150px;
+  min-width: 270px;
+  border: 2px solid greenyellow;
+  padding: 10px;
+}
