@@ -1,5 +1,5 @@
 import "./style.css";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Button from "../Button";
 
 const Counter: React.FC = () => {
@@ -13,6 +13,10 @@ const Counter: React.FC = () => {
     setCount(count + 2);
     setCount(count + 2);
   };
+
+  useEffect(() => {
+    console.log("change");
+  });
 
   return (
     <div className="counter__info">
