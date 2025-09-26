@@ -1,11 +1,11 @@
 import "./style.css";
-import { FC } from "react";
+import { FC, useEffect, useState } from "react";
 import Counter from "../../components/Counter";
 import NamesArray from "../../components/NamesArray";
 import TaskList from "../../components/TaskList";
 import { tasks } from "../../data/tasks";
 import UserList from "../../components/UserList";
-import { users } from "../../data/users";
+// import { users } from "../../data/users";
 import FruitsArray from "../../components/FruitsArray";
 import CitiesArray from "../../components/CitiesArray";
 import RemoveNames from "../../components/RemoveNames";
@@ -22,6 +22,14 @@ import { list } from "../../data/list";
 import Notes from "../../components/Notes";
 
 const TestField: FC = () => {
+  const [users, setUsers] = useState([]);
+
+  useEffect(() => {
+    fetch("https://jsonplaceholder.typicode.com/users")
+      .then((response) => response.json())
+      .then((json) => setUsers(json));
+  });
+
   return (
     <div className="wrapper">
       {/* <Counter /> */}
@@ -29,14 +37,14 @@ const TestField: FC = () => {
       {/* <NamesArray /> */}
       {/* <RemoveNames /> */}
       {/* <TaskList tasks={tasks} /> */}
-      {/* <UserList users={users} /> */}
+      <UserList users={users} />
       {/* <FruitsArray /> */}
       {/* <MenuComponent /> */}
       {/* <CitiesArray /> */}
       {/* <Login />
       <SignUp /> */}
-      <SquereAdding />
-      <Notes />
+      {/* <SquereAdding /> */}
+      {/* <Notes /> */}
       {/* <TodoList items={todos} /> */}
       {/* <FormInput /> */}
       {/* <ShoppingList items={list} /> */}
