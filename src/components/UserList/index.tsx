@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useEffect } from "react";
 
 interface User {
   id: number;
@@ -15,6 +15,7 @@ interface UserListProps {
 }
 
 const UserList: FC<UserListProps> = ({ users }) => {
+  
   return (
     <ul>
       {users.map((user) => (
