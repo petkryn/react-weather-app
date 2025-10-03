@@ -4,10 +4,10 @@ import TestField from "./pages/TestField";
 
 const App = () => {
   return (
-    <div>
-      {/* <Home /> */}
-      <TestField />
-    </div>
+    <>
+      <Home />
+      {/* <TestField /> */}
+    </>
   );
 };
 

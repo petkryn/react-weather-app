@@ -4,7 +4,6 @@ import { FC } from "react";
 interface TestDataInterface {
   location: LocationInterface;
   current: CurrentInterface;
-
 }
 
 interface LocationInterface {
