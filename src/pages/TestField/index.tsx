@@ -20,24 +20,33 @@ import FormInput from "../../components/FormInput";
 import ShoppingList from "../../components/ShoppingList";
 import { list } from "../../data/list";
 import Notes from "../../components/Notes";
+import TodosList from "../../components/TodosList";
 
 const TestField: FC = () => {
   const [users, setUsers] = useState([]);
+  const [todos, setTodos] = useState([]);
 
   useEffect(() => {
     fetch("https://jsonplaceholder.typicode.com/users")
       .then((response) => response.json())
       .then((json) => setUsers(json));
-  });
+  }, []);
+
+  useEffect(() => {
+    fetch("https://jsonplaceholder.typicode.com/todos")
+      .then((response) => response.json())
+      .then((json) => setTodos(json));
+  }, []);
 
   return (
     <div className="wrapper">
       {/* <Counter /> */}
+      <TodosList todos={todos} />
 
       {/* <NamesArray /> */}
       {/* <RemoveNames /> */}
       {/* <TaskList tasks={tasks} /> */}
-      <UserList users={users} />
+      {/* <UserList users={users} /> */}
       {/* <FruitsArray /> */}
       {/* <MenuComponent /> */}
       {/* <CitiesArray /> */}
