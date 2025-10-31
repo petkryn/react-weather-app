@@ -1,3 +1,94 @@
 .input {
   color: white;
 }
+
+.weather-cards {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  max-width: 100%;
+  overflow-x: auto;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  padding: 10px;
+}
+
+.weather-cards::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.weather-cards::-webkit-scrollbar-thumb {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+.weather-cards::-webkit-scrollbar {
+  width: 10px;
+}
+
+.main__page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 15px;
+}
+
+.weather__card__week {
+  flex: 1 0 auto;
+}
+
+.weather-errors {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  color: #ff4d4f;
+  background-color: #ffeaea;
+  border: 1px solid #ffb3b3;
+  padding: 10px 15px;
+  border-radius: 8px;
+  margin-top: 15px;
+  font-size: 25px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.favorites {
+  margin-top: 20px;
+}
+
+.favorites h3 {
+  margin-bottom: 10px;
+  color: white;
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.favorite-city {
+  list-style: none;
+  cursor: pointer;
+  padding: 5px 10px;
+  margin-bottom: 5px;
+  background-color: #f1f1f1;
+  border-radius: 8px;
+  transition: 0.3s;
+}
+
+.favorite-city:hover {
+  background-color: #dbeafe;
+}
+
+ul {
+  display: flex;
+  gap: 10px;
+}
+
+.delete__city {
+  border: 1px solid black;
+  padding: 2px;
+  border-radius: 5px;
+  margin-left: 8px;
+}
+
+.delete__city:hover {
+  background-color: aqua;
+  color: #ff4d4f;
+}
