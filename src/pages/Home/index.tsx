@@ -21,8 +21,7 @@ const Home: FC = () => {
   const [weatherError, setWeatherError] = useState<string>("");
 
   const [city, setCity] = useState<City | null>(
-    // JSON.parse(localStorage.getItem("city") || "null")
-    { name: "Kyiv", isWeatherDay: true }
+    JSON.parse(localStorage.getItem("city") || "null")
   );
   const [inputValue, setInputValue] = useState(""); //
   const [favoriteCities, setFavoriteCities] = useState<string[]>(
@@ -32,10 +31,8 @@ const Home: FC = () => {
   useEffect(() => {
     console.log(city);
     if (city && city.name) {
-      console.log(city.name);
       setInputValue(city.name);
-      console.log(inputValue);
-      getWetherDay();
+      getWetherDay(city.name);
     }
   }, []);
 
@@ -43,7 +40,7 @@ const Home: FC = () => {
     localStorage.setItem("favoriteCities", JSON.stringify(favoriteCities));
   }, [favoriteCities]);
 
-  const getWetherDay = () => {
+  const getWetherDay = (name?: string) => {
     setWeatherError("");
 
     if (inputValue) {
@@ -176,7 +173,6 @@ const Home: FC = () => {
                 onClick={() => {
                   setInputValue(city);
                   getWetherDay();
-                  // getWetherWeek();
                 }}
               >
                 <span>{city}</span>
