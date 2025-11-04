@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { FC, useState, useEffect } from "react";
 import MainTitle from "../../components/MainTitle";
 import Button from "../../components/Button";
 import Input from "../../components/Input";
@@ -6,48 +6,93 @@ import WeatherCardDay from "../../components/WeatherCardDay";
 import WeatherCardWeek from "../../components/WeatherCardWeek";
 import { WeatherWeekInterface } from "../../components/WeatherCardWeek";
 import "./style.css";
+import { apiConstants } from "../../constants/api-constants";
+
+interface City {
+  name: string;
+  isWeatherDay: boolean;
+}
 
 const Home: FC = () => {
-  const [inputValue, setInputValue] = useState<string>("");
   const [weatherDay, setWeatherDay] = useState(null);
   const [weatherWeek, setWeatherWeek] = useState<WeatherWeekInterface | null>(
     null
   );
-  const urlDay = "https://api.weatherapi.com/v1/current.json";
-  const keyDay = "33e53c5f75d247f69fc135030251803";
-  const urlWeek =
-    "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline";
-  const keyWeek = "95YUCEXKBE9VZZ6Y7EQWNEZXK";
+  const [weatherError, setWeatherError] = useState<string>("");
 
-  const getWetherDay = () => {
-    fetch(`${urlDay}?q=${inputValue}&key=${keyDay}`)
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.error) {
-          throw new Error(data.error.message);
-        }
-        setWeatherDay(data);
-      })
-      .catch((error) => {
-        // mainWeatherInfo.innerHTML = `<p class="error__style">This locality was not found</p>`;
-      });
+  const [city, setCity] = useState<City | null>(
+    JSON.parse(localStorage.getItem("city") || "null")
+  );
+  const [inputValue, setInputValue] = useState(""); //
+  const [favoriteCities, setFavoriteCities] = useState<string[]>(
+    JSON.parse(localStorage.getItem("favoriteCities") || "[]")
+  );
+
+  useEffect(() => {
+    console.log(city);
+    if (city && city.name) {
+      setInputValue(city.name);
+      getWetherDay(city.name);
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("favoriteCities", JSON.stringify(favoriteCities));
+  }, [favoriteCities]);
+
+  const getWetherDay = (name?: string) => {
+    setWeatherError("");
+
+    if (inputValue) {
+      fetch(`${apiConstants.urlDay}?q=${inputValue}&key=${apiConstants.keyDay}`)
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.error) {
+            throw new Error(data.error.message);
+          }
+          setWeatherDay(data);
+        })
+        .catch(() => {
+          setWeatherError("This locality was not found");
+          setWeatherDay(null);
+        });
+
+      localStorage.setItem(
+        "city",
+        JSON.stringify({ name: inputValue, isWeatherDay: true })
+      );
+    }
   };
 
   const getWetherWeek = () => {
+    setWeatherError("");
+    setWeatherWeek(null);
+
     const { startDate, endDate } = formatDates();
     fetch(
-      `${urlWeek}/${inputValue}/${startDate}/${endDate}?unitGroup=metric&include=days&key=${keyWeek}&contentType=json`
+      `${apiConstants.urlWeek}/${inputValue}/${startDate}/${endDate}?unitGroup=metric&include=days&key=${apiConstants.keyWeek}&contentType=json`
     )
-      .then((response) => response.json())
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("This locality was not found");
+        }
+        return response.json();
+      })
       .then((data) => {
-        if (data.error) {
-          throw new Error(data.error.message);
+        if (!data || !data.days || !data.resolvedAddress || !data.days.length) {
+          throw new Error("This locality was not found");
         }
         setWeatherWeek(data);
       })
-      .catch((error) => {
-        // mainWeatherInfo.innerHTML = `<p class="error__style">This locality was not found</p>`;
+      .catch(() => {
+        setWeatherError("This locality was not found");
+        setWeatherWeek(null);
       });
+
+    localStorage.setItem(
+      "city",
+      JSON.stringify({ name: inputValue, isWeatherDay: false })
+    );
   };
 
   const formatDates = () => {
@@ -67,6 +112,20 @@ const Home: FC = () => {
     return { startDate, endDate };
   };
 
+  const addFavoriteCity = () => {
+    if (!favoriteCities.includes(inputValue)) {
+      setFavoriteCities((prevState) => {
+        return [...prevState, inputValue];
+      });
+    }
+  };
+
+  const deleteFavoriteCity = (cityNameToDelete: string) => {
+    setFavoriteCities((prev) =>
+      prev.filter((city) => city !== cityNameToDelete)
+    );
+  };
+
   return (
     <div className="main__page">
       <MainTitle titleText="Simple Weather App" />
@@ -81,15 +140,56 @@ const Home: FC = () => {
         <div className="search">
           <Button customClick={getWetherDay}>Weather day</Button>
           <Button customClick={getWetherWeek}>Weather week</Button>
+          <Button customClick={addFavoriteCity}>Add Favorite Cities</Button>
         </div>
       </div>
 
-      <div className="weather-cards">
-        {weatherDay ? <WeatherCardDay data={weatherDay} /> : ""}
-        {weatherWeek
-          ? weatherWeek.days.map((day) => <WeatherCardWeek data={day} />)
-          : ""}
-      </div>
+      {weatherError && (
+        <div className="weather-errors">
+          {weatherError && (
+            <p className="error__style">Error: {weatherError}</p>
+          )}
+        </div>
+      )}
+
+      {(weatherDay || weatherWeek) && (
+        <div className="weather-cards">
+          {weatherDay ? <WeatherCardDay data={weatherDay} /> : ""}
+
+          {weatherWeek
+            ? weatherWeek.days.map((day) => <WeatherCardWeek data={day} />)
+            : ""}
+        </div>
+      )}
+
+      {favoriteCities.length > 0 && (
+        <div className="favorites">
+          <h3>Favorite cities:</h3>
+          <ul>
+            {favoriteCities.map((city) => (
+              <li
+                key={city}
+                className="favorite-city"
+                onClick={() => {
+                  setInputValue(city);
+                  getWetherDay();
+                }}
+              >
+                <span>{city}</span>
+                <span
+                  className="delete__city"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    deleteFavoriteCity(city);
+                  }}
+                >
+                  X
+                </span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
     </div>
   );
 };
