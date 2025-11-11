@@ -3,14 +3,18 @@
 }
 
 .weather-cards {
-  display: flex;
-  align-items: center;
+  display: none;
+  align-items: stretch;
   gap: 10px;
   max-width: 100%;
   overflow-x: auto;
   border: 1px solid #ccc;
   border-radius: 10px;
   padding: 10px;
+}
+
+.weather-cards.active {
+  display: flex;
 }
 
 .weather-cards::-webkit-scrollbar-track {
@@ -26,7 +30,7 @@
   width: 10px;
 }
 
-.main__page {
+.container {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 15px;
@@ -66,7 +70,7 @@
   list-style: none;
   cursor: pointer;
   padding: 5px 10px;
-  margin-bottom: 5px;
+  margin-bottom: 35px;
   background-color: #f1f1f1;
   border-radius: 8px;
   transition: 0.3s;
@@ -91,4 +95,31 @@ ul {
 .delete__city:hover {
   background-color: aqua;
   color: #ff4d4f;
+}
+
+.loader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(255, 255, 255, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 20px;
+  padding-top: 30px;
+  z-index: 9999;
+}
+
+.imgGif {
+  width: 200px;
+  height: 200px;
+}
+
+.text__loader {
+  color: white;
+  font-size: 24px;
+  font-weight: bold;
 }
