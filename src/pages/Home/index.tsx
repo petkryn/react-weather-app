@@ -27,12 +27,13 @@ const Home: FC = () => {
   const [favoriteCities, setFavoriteCities] = useState<string[]>(
     JSON.parse(localStorage.getItem("favoriteCities") || "[]")
   );
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     console.log(city);
     if (city && city.name) {
       setInputValue(city.name);
-      getWetherDay(city.name);
+      getWetherDay();
     }
   }, []);
 
@@ -40,10 +41,16 @@ const Home: FC = () => {
     localStorage.setItem("favoriteCities", JSON.stringify(favoriteCities));
   }, [favoriteCities]);
 
-  const getWetherDay = (name?: string) => {
+  useEffect(() => {
+    console.log("Loading:", loading);
+  }, [loading]);
+
+  const getWetherDay = () => {
     setWeatherError("");
+    setWeatherWeek(null);
 
     if (inputValue) {
+      setLoading(true);
       fetch(`${apiConstants.urlDay}?q=${inputValue}&key=${apiConstants.keyDay}`)
         .then((response) => response.json())
         .then((data) => {
@@ -55,6 +62,9 @@ const Home: FC = () => {
         .catch(() => {
           setWeatherError("This locality was not found");
           setWeatherDay(null);
+        })
+        .finally(() => {
+          setLoading(false);
         });
 
       localStorage.setItem(
@@ -66,7 +76,8 @@ const Home: FC = () => {
 
   const getWetherWeek = () => {
     setWeatherError("");
-    setWeatherWeek(null);
+    setWeatherDay(null);
+    setLoading(true);
 
     const { startDate, endDate } = formatDates();
     fetch(
@@ -87,6 +98,9 @@ const Home: FC = () => {
       .catch(() => {
         setWeatherError("This locality was not found");
         setWeatherWeek(null);
+      })
+      .finally(() => {
+        setLoading(false);
       });
 
     localStorage.setItem(
@@ -128,68 +142,73 @@ const Home: FC = () => {
 
   return (
     <div className="main__page">
-      <MainTitle titleText="Simple Weather App" />
-      <div className="main__content">
-        <Input
-          customType="text"
-          customPlaceholder="Search city"
-          isDisabled={false}
-          customValue={inputValue}
-          customOnChange={(event) => setInputValue(event.target.value)}
-        />
-        <div className="search">
-          <Button customClick={getWetherDay}>Weather day</Button>
-          <Button customClick={getWetherWeek}>Weather week</Button>
-          <Button customClick={addFavoriteCity}>Add Favorite Cities</Button>
-        </div>
-      </div>
+      <div className="container">
+        <MainTitle titleText="Simple Weather App" />
+        <div className="main__content">
+          <Input
+            customType="text"
+            customPlaceholder="Search city"
+            isDisabled={false}
+            customValue={inputValue}
+            customOnChange={(event) => setInputValue(event.target.value)}
+          />
+          <div className="search">
+            <Button customClick={getWetherDay}>Weather day</Button>
+            <Button customClick={getWetherWeek}>Weather week</Button>
+            <Button customClick={addFavoriteCity}>Add Favorite Cities</Button>
+          </div>
 
-      {weatherError && (
-        <div className="weather-errors">
-          {weatherError && (
-            <p className="error__style">Error: {weatherError}</p>
+          {loading && (
+            <div className="loader">
+              <img className="imgGif" src="/img/7kRI.gif" alt="gif" />
+              <p className="text__loader">Loading...</p>
+            </div>
           )}
         </div>
-      )}
 
-      {(weatherDay || weatherWeek) && (
-        <div className="weather-cards">
-          {weatherDay ? <WeatherCardDay data={weatherDay} /> : ""}
+        {weatherError && (
+          <div className="weather-errors">
+            <p className="error__style">Error: {weatherError}</p>
+          </div>
+        )}
 
+        {weatherDay ? <WeatherCardDay data={weatherDay} /> : ""}
+
+        <div className={weatherWeek ? "weather-cards active" : "weather-cards"}>
           {weatherWeek
             ? weatherWeek.days.map((day) => <WeatherCardWeek data={day} />)
             : ""}
         </div>
-      )}
 
-      {favoriteCities.length > 0 && (
-        <div className="favorites">
-          <h3>Favorite cities:</h3>
-          <ul>
-            {favoriteCities.map((city) => (
-              <li
-                key={city}
-                className="favorite-city"
-                onClick={() => {
-                  setInputValue(city);
-                  getWetherDay();
-                }}
-              >
-                <span>{city}</span>
-                <span
-                  className="delete__city"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    deleteFavoriteCity(city);
+        {favoriteCities.length > 0 && (
+          <div className="favorites">
+            <h3>Favorite cities:</h3>
+            <ul>
+              {favoriteCities.map((city) => (
+                <li
+                  key={city}
+                  className="favorite-city"
+                  onClick={() => {
+                    setInputValue(city);
+                    getWetherDay();
                   }}
                 >
-                  X
-                </span>
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
+                  <span>{city}</span>
+                  <span
+                    className="delete__city"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      deleteFavoriteCity(city);
+                    }}
+                  >
+                    X
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+      </div>
     </div>
   );
 };
