@@ -41,10 +41,6 @@ const Home: FC = () => {
     localStorage.setItem("favoriteCities", JSON.stringify(favoriteCities));
   }, [favoriteCities]);
 
-  useEffect(() => {
-    console.log("Loading:", loading);
-  }, [loading]);
-
   const getWetherDay = () => {
     setWeatherError("");
     setWeatherWeek(null);
